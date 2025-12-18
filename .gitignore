@@ -1,0 +1,16 @@
+__pycache__
+archive/__pycache__/
+tester.py
+reference/
+tables/
+dev_spec_vals/
+lspci_logs/
+.vs
+# Build output
+x64/
+Debug/
+Release/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+

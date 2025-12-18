@@ -1,0 +1,57 @@
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%ManufacturerName%
+DriverVer=11/25/2025,1.0.0.1
+CatalogFile=kmdfCfgSpcRd.cat
+PnpLockdown=1
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+kmdfCfgSpcRd.sys = 1,,
+
+[Manufacturer]
+%ManufacturerName% = DeviceList,NTamd64
+
+[DeviceList.NTamd64]
+%INTEL_DEVICE_DESC% = PCI_Filter_Install, PCI\VEN_8086
+
+[PCI_Filter_Install.NTamd64]
+CopyFiles = DriverCopyFiles
+
+[PCI_Filter_Install.NTamd64.Services]
+AddService = kmdfCfgSpcRd,0x00000002, Service_Install
+
+[PCI_Filter_Install.NTamd64.HW]
+AddReg = AddDeviceUpperFilter
+
+[AddDeviceUpperFilter]
+HKR,,UpperFilters,0x00010008,"kmdfCfgSpcRd"
+
+[Service_Install]
+DisplayName = %ServiceName%
+ServiceType = 1
+StartType = 0
+ErrorControl = 1
+ServiceBinary = %12%\kmdfCfgSpcRd.sys
+
+[PCI_Filter_Install.NTamd64.Wdf]
+KmdfService = kmdfCfgSpcRd, kmdfCfgSpcRd_wdfsect
+
+[kmdfCfgSpcRd_wdfsect]
+KmdfLibraryVersion = 1.15
+
+[DriverCopyFiles]
+kmdfCfgSpcRd.sys
+
+[Strings]
+ManufacturerName="Microchip"
+DiskName="PCI Config Space Reader Installation Disk"
+INTEL_DEVICE_DESC="PCI Config Space Reader test (Intel Devices ONLY)"
+ServiceName="PCI Config Space Reader"
